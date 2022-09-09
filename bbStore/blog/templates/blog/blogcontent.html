@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{%block title %}  BlogContent {% endblock %}
+{% block heading %} <strong class="my-5"> BlogContent </strong> {% endblock %}
+
+{% block body %} 
+<div class = "container">
+    <h1> {{ blog.name }} </h1> Author:- {{blog.entry}}
+    <p>"{{ blog.tag_line}}"</p>
+    <img src="{{ blog.img.url}}" style="max-height:225px; alt="...">
+    <p>{{blog.content}}</p>
+    
+</div>
+
+
+{% endblock %}

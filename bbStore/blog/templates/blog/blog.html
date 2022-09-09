@@ -1,0 +1,37 @@
+
+{% extends 'blog/base.html' %}
+{% load static %}
+{%block title %} Blogs {% endblock %}
+
+{% block heading %}   {% endblock %}
+{% block body %}
+{% if user.is_authenticated %}
+<strong class="mx-5 my-3"> All Blogs</strong>
+
+<div class = "row card-group mx-5 "> 
+
+  {% for blog in blogs%}
+ <div class="col-4 my-3">
+  <div class="card mx-5" style="width: 18rem; height:22rem; margin-right:20px ">
+    <img src="{{ blog.img.url}}" style="max-height:225px; alt="...">
+    <div class="card-body" style="position:absolute; top:214px ">
+      <h5 class="card-title">{{ blog.name }}</h5>
+      <p class="card-text">{{ blog.tag_line}}</p>
+      <a href="readblog/{{blog.id}}" class="btn btn-primary" id="qv{{blog.id}}">Read full Blog</a>
+
+    </div>
+   </div> 
+  </div>
+{% endfor %}
+
+{% else %}
+<div class="alert alert-info" role="alert">
+  Hey User Welcome to our website. Please sign up to Continue :D
+</div>
+{% endif %}
+
+{% endblock %}
+
+
+
+

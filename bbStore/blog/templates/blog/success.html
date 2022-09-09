@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %} 
+{% block body %} 
+
+        {% if messages %}  
+            <ul>   
+                {% for message in messages %}  
+                    <li>{{ message }}</li>  
+                {% endfor %}  
+            </ul>  
+        {% endif %}    
+        <p><a href="{% url 'logIn' %}">log In</a></p> 
+
+{% endblock %}
+
+

@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %} 
+
+{% block body %} 
+    <h2>Sign Up</h2>
+    
+    {% if messages %}  
+        <ul>   
+            {% for message in messages %}  
+                <li>{{ message }}</li>  
+                {% endfor %}  
+        </ul>   
+    {% endif %}
+    
+    <form method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <input href="/signup.html" type="submit" value="signUp"> 
+    </form>
+
+{% endblock %}     
+

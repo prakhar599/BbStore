@@ -26,7 +26,6 @@ def signUp(request):
         if form.is_valid():
             form.save() 
         if form.errors :
-            print('hi')
             messages.warning(request,' Incorrect Credentials')
             return redirect('/blog/signup',form.errors)  
         messages.success(request,'account created successfully.')

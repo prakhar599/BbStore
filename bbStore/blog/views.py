@@ -13,9 +13,6 @@ def index(request):
      paginator = Paginator(blogs,6,orphans=3) # Show 25 contacts per page.
      page_number = request.GET.get('page')
      page_obj = paginator.get_page(page_number)
-     print(page_obj)
-     print(paginator)
-     print(page_number)
      return render(request,'blog/blog.html',{'page_obj':page_obj})
  
 def signUp(request):

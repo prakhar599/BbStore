@@ -6,19 +6,17 @@ from .forms import signUpForm, logInForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages 
 from django.contrib.auth import authenticate,login
+from django.core.paginator import Paginator
 
 def index(request):
-    context = {
-        'blogs' : Blog.objects.all().order_by('name')
-    }
-    return render(request,'blog/blog.html',context)
-
-def blog(request):
-    context = {
-        'blogs' : Blog.objects.all().order_by('name')
-    }
-    return render(request,'blog/blog.html',context)
- 
+     blogs = Blog.objects.all().order_by('name')
+     paginator = Paginator(blogs,6,orphans=3) # Show 25 contacts per page.
+     page_number = request.GET.get('page')
+     page_obj = paginator.get_page(page_number)
+     print(page_obj)
+     print(paginator)
+     print(page_number)
+     return render(request,'blog/blog.html',{'page_obj':page_obj})
  
 def signUp(request):
     if request.method == 'POST':

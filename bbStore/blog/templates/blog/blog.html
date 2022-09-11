@@ -44,11 +44,21 @@
 
 {% else %}
 
-  <div class="alert alert-info" role="alert">
+{% if messages %}  
+<ul>   
+    {% for message in messages %}  
+        <li>{{ message }}</li>  
+        {% endfor %}  
+</ul>   
+{% endif %}
+
+
+  {% comment %} <div class="alert alert-info" role="alert">
     Hey User Welcome to our website. Please sign up to Continue :D
-  </div>
+  </div> {% endcomment %}
 
 {% endif %}
+
 
 {% endblock %}
 

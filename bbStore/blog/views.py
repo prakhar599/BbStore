@@ -5,7 +5,7 @@ from .models import Author , Blog
 from .forms import signUpForm, logInForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages 
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout as auth_logout
 from django.core.paginator import Paginator
 
 def index(request):
@@ -13,6 +13,8 @@ def index(request):
      paginator = Paginator(blogs,6,orphans=3) # Show 25 contacts per page.
      page_number = request.GET.get('page')
      page_obj = paginator.get_page(page_number)
+     messages.info(request,'Hey User Welcome to our website. Please sign up to Continue :D')
+     
      return render(request,'blog/blog.html',{'page_obj':page_obj})
  
 def signUp(request):
@@ -49,6 +51,11 @@ def logIn(request):
     else:
         form = logInForm()     
         return render(request,'blog/login.html',context = {'form':form})
+
+def logout(request):
+    auth_logout(request)
+    messages.success(request,'Logged out successfully')
+    return render(request,'blog/blog.html')
 
 
 def create_Blog(request):

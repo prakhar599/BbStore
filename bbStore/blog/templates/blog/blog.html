@@ -5,7 +5,7 @@
 
 {% block heading %}   {% endblock %}
 {% block body %}
-    {% if user.is_authenticated %}
+{% if user.is_authenticated %}
     <strong class="mx-5 my-3"> All Blogs</strong>
     <div class = "row card-group mx-5 "> 
     
@@ -44,18 +44,9 @@
 
 {% else %}
 
-{% if messages %}  
-<ul>   
-    {% for message in messages %}  
-        <li>{{ message }}</li>  
-        {% endfor %}  
-</ul>   
-{% endif %}
-
-
-  {% comment %} <div class="alert alert-info" role="alert">
+  <div class="alert alert-info" role="alert">
     Hey User Welcome to our website. Please sign up to Continue :D
-  </div> {% endcomment %}
+  </div> 
 
 {% endif %}
 

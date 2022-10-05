@@ -34,12 +34,24 @@
             <li><a class="dropdown-item" href="books">Book Store</a></li>
           </ul>
         </li>
-        <li class="nav-item " style="margin-left: 884px;">
-          <a class="nav-link active" aria-current="page" href="login">LogIn</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="signup">SignUp</a>
-        </li>
+
+
+        {% if user.is_authenticated %}
+          <li class="nav-item ml-3">
+            <a class="nav-link active" aria-current="page" href="/blog/logout">LogOut</a>
+          </li>
+
+          {% else %}
+
+          <li class="nav-item " style="margin-left: 884px;">
+            <a class="nav-link active" aria-current="page" href="login">LogIn</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="signup">SignUp</a>
+          </li>
+        
+        {% endif %}
+
       </ul>
     </div>
   </div>

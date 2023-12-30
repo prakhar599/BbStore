@@ -1,21 +1,108 @@
-{% extends 'blog/base.html' %} 
+{% extends "blog/base.html" %}
 
-{% block body %} 
-    <h2>Sign Up</h2>
-    
-    {% if messages %}  
-        <ul>   
-            {% for message in messages %}  
-                <li>{{ message }}</li>  
-                {% endfor %}  
-        </ul>   
-    {% endif %}
-    
-    <form method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <input href="/signup.html" type="submit" value="signUp"> 
+{% block title %}Sign Up - BBstore{% endblock %}
+
+{% block css %}
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .container {
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-top: 50px;
+    }
+
+    form {
+      max-width: 400px;
+      margin: auto;
+    }
+
+    button {
+      width: 100%;
+    }
+  </style>
+{% endblock %}
+
+{% block heading %}
+  <!-- You can customize the heading if necessary -->
+  <div class="container mt-3">
+    <h2 class="text-center">Sign Up</h2>
+  </div>
+{% endblock %}
+
+{% block body %}
+
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function (event) {
+      const password = document.getElementById('id_password').value;
+      const confirmPassword = document.getElementById('id_password_confirm').value;
+
+      if (password !== confirmPassword) {
+        alert('Password and Password confirmation do not match.');
+        event.preventDefault();
+      }
+    });
+  </script>
+
+  <div class="container mt-4">
+    <form method="post" action="{% url 'signUp' %}">
+      {% csrf_token %}
+
+
+      {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+          Please correct the following errors:
+          <ul>
+            {% for field, errors in form.errors.items %}
+              {% for error in errors %}
+                <li>{{ field }}: {{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}      
+
+      <div class="mb-3">
+        <label for="id_username" class="form-label">Username</label>
+        <input type="text" name="username" id="id_username" class="form-control" maxlength="150" required pattern="[a-zA-Z0-9@/./+/-/_]+">
+      </div>
+      
+      <div class="mb-3">
+        <label for="id_email" class="form-label">Email address</label>
+        <input type="email" name="email" id="id_email" class="form-control" required>
+      </div>
+      
+      <div class="mb-3">
+        <label for="id_first_name" class="form-label">First name</label>
+        <input type="text" name="first_name" id="id_first_name" class="form-control">
+      </div>
+      
+      <div class="mb-3">
+        <label for="id_last_name" class="form-label">Last name</label>
+        <input type="text" name="last_name" id="id_last_name" class="form-control">
+      </div>
+      
+      <div class="mb-3">
+        <label for="id_password" class="form-label">Password</label>
+        <input type="password" name="password1" id="id_password" class="form-control" minlength="8" required
+               pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@/./+/-/_])[A-Za-z\d@/./+/-/_]+$">
+        <small class="form-text text-muted">
+          Your password must contain at least 8 characters, including letters, digits, and @/./+/-/_.
+        </small>
+      </div>
+      
+      <div class="mb-3">
+        <label for="id_password_confirm" class="form-label">Password confirmation</label>
+        <input type="password" name="password2" id="id_password_confirm" class="form-control" required>
+      </div>
+      
+
+      <input href="/signup.html" type="submit" value="signUp">
     </form>
-
-{% endblock %}     
+  </div>
+{% endblock %}
 

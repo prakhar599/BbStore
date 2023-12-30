@@ -11,15 +11,14 @@ urlpatterns = [
     path('createnew',views.create_Blog,name="create_blog"),
     path('updateblog',views.update_Blog,name="update_blog"),
     path('readblog/<int:myid>/',views.read_Blog,name="readblog"),
-    path('contact',views.contact_Us,name="contact_us"),
     path('aboutus',views.about_Us,name="about_us"),
     path('login/',views.logIn,name="logIn"),
     path('logout/',views.logout,name="logOut"),
-    path('signup/',views.signUp,name="signUp"), 
+    path('signup/',views.signUp,name="signUp"),
     path('books',views.books,name='books'),
+    path('contact/', views.contact, name='contact'),
+
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
-    
-# if settings.DEBUG:
-#     urlpatterns += static(settings.MEDIA_URL,document_root= settings.MEDIA_ROOT)    

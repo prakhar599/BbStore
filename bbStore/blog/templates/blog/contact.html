@@ -1,79 +1,57 @@
 {% extends 'blog/base.html' %}
 {% load static %}
-{%block title %}  Contact {% endblock %}
+{% block title %} Contact {% endblock %}
 
 {% block css %}
-
 <link rel="stylesheet" type="text/css" href="{% static 'mystyle.css' %}">
-{% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> {% endcomment %}
 {% endblock %}
 
-{% block body %} 
-
-
+{% block body %}
 <div class="container">
-   <div class="contact-parent">
-      <div class="contact-child child1">
-         <p>
-            <i class="fas fa-map-marker-alt" style =""></i> Address <br />
-            <span> Asutosh City, Pilibhit Bypass
-            <br />
-            Bareilly, India
-            </span>
-         </p>
-         <p>
-            <i class="fas fa-phone-alt"></i> Let's Talk <br />
-            <span> 7037330295 </span>
-         </p>
-         <p>
-            <i class=" far fa-envelope"></i> General Support <br />
-            <span>forestlaw319@gmail.com</span>
-         </p>
-      </div>
-      <div class="contact-child child2">
-         <div class="inside-contact">
-            <h2>Contact Us</h2>
-            <h3>
-               <span id="confirm">
-            </h3>
-            <p>Name *</p>
-            <input id="txt_name" type="text" Required="required">
-            <p>Email *</p>
-            <input id="txt_email" type="text" Required="required">
-            <p>Phone *</p>
-            <input id="txt_phone" type="text" Required="required">
-            <p>Subject *</p>
-            <input id="txt_subject" type="text" Required="required">
-            <p>Message *</p>
-            <textarea id="txt_message" rows="4" cols="20" Required="required" ></textarea>
-            <input type="submit" id="btn_send" value="SEND">
-         </div>
-      </div>
-   </div>
+    <div class="contact-parent">
+        <div class="contact-child child1">
+            <p>
+                <i class="fas fa-map-marker-alt"></i> Address <br />
+                <span> Delhi <br /> India </span>
+            </p>
+            <p>
+                <i class="fas fa-phone-alt"></i> Let's Talk <br />
+                <span> 7037330295 </span>
+            </p>
+            <p>
+                <i class="far fa-envelope"></i> General Support <br />
+                <span>forestlaw319@gmail.com</span>
+            </p>
+        </div>
+        <div class="contact-child child2">
+            <div class="inside-contact">
+                <h2>Contact Us</h2>
+                <h3><span id="confirm"></span></h3>
+
+                <form method="post" action="{% url 'contact' %}">
+                    {% csrf_token %}
+
+                    <p>Name *</p>
+                    <input type="text" name="txt_name" required>
+
+                    <p>Email *</p>
+                    <input type="text" name="txt_email" required>
+
+                    <p>Phone *</p>
+                    <input type="text" name="txt_phone" required>
+
+                    <p>Subject *</p>
+                    <input type="text" name="txt_subject" required>
+
+                    <p>Message *</p>
+                    <textarea name="txt_message" rows="4" cols="20" required></textarea>
+
+                    <input type="submit" id="btn_send" value="SEND">
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
-<script src="https://kit.fontawesome.com/a076d05399.js"></script> 
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

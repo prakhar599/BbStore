@@ -1,32 +1,155 @@
 {% extends 'blog/base.html' %}
 
-{% block body %} 
+{% block css %}
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
 
+    .container {
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-top: 50px;
+    }
 
-{% if user.is_authenticated %}
-    {% if messages %}  
-    <ul>   
-        {% for message in messages %}  
-            <li>{{ message }}</li>  
-            {% endfor %}  
-    </ul>   
+    form {
+      max-width: 400px;
+      margin: auto;
+    }
+
+    button {
+      width: 100%;
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .password-strength {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #28a745;
+    }
+
+    .error-message {
+      color: #dc3545;
+      margin-top: 10px;
+    }
+
+    .title {
+      text-align: center;
+      font-size: 24px;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+      color: #007bff;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+
+<div class="container mt-4">
+  <div class="title">Login</div>
+  {% if user.is_authenticated %}
+    {% if messages %}
+      <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
     {% endif %}
     <p><a href="{% url 'index' %}">Enjoy our app!</a></p>
-
-{% else %}
-
+  {% else %}
     {% if form.errors %}
-        {{ form.errors }}
+      <div class="error-message">{{ form.errors }}</div>
     {% endif %}
 
     <form method="post">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <button type="submit" >Submit</button>
+      <div class="form-group">
+        <label for="id_username">Username:</label>
+        {{ form.username }}
+      </div>
+
+      <div class="form-group">
+        <label for="id_email">Email address:</label>
+        {{ form.email }}
+      </div>
+
+      <div class="form-group">
+        <label for="id_first_name">First name:</label>
+        {{ form.first_name }}
+      </div>
+
+      <div class="form-group">
+        <label for="id_last_name">Last name:</label>
+        {{ form.last_name }}
+      </div>
+
+    <div class="form-group">
+      <label for="id_password">Password:</label>
+      <input type="password" name="password" id="id_password" class="form-control" minlength="8" required pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@/./+/-/_])[A-Za-z\d@/./+/-/_]+$">
+      <small class="form-text text-muted">
+        Your password must contain at least 8 characters, including letters, digits, and @/./+/-/_.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="id_password_confirm">Password confirmation:</label>
+      <input type="password" name="password_confirm" id="id_password_confirm" class="form-control" required>
+    </div>
+      {% csrf_token %}
+      <button type="submit">Submit</button>
     </form>
+
+    <div class="password-strength" id="password-strength"></div>
     <p>Not a member? <a href="{% url 'signUp' %}">Sign up now!</a></p>
-    
-{% endif %}    
-    
-    
+  {% endif %}
+</div>
+
+<script>
+  document.getElementById('id_password').addEventListener('input', function () {
+    const password = this.value;
+    const strength = calculatePasswordStrength(password);
+    displayPasswordStrength(strength);
+  });
+
+  function calculatePasswordStrength(password) {
+    // Implement your password strength calculation logic here
+    // Return a value between 0 and 100
+    // Example: return password.length * 10;
+    return password.length * 5;
+  }
+
+  function displayPasswordStrength(strength) {
+    const strengthElement = document.getElementById('password-strength');
+    strengthElement.textContent = 'Password Strength: ' + strength + '%';
+  }
+</script>
+
 {% endblock %}

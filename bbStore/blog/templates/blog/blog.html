@@ -1,58 +1,48 @@
-
 {% extends 'blog/base.html' %}
 {% load static %}
-{%block title %} Blogs {% endblock %}
+{% block title %} Blogs {% endblock %}
 
 {% block heading %}   {% endblock %}
 {% block body %}
-{% if user.is_authenticated %}
+
+    <div class="alert alert-info" role="alert">
+        Hey User, welcome to our website. Please sign up for more features :D
+    </div>
+
     <strong class="mx-5 my-3"> All Blogs</strong>
-    <div class = "row card-group mx-5 "> 
-    
-    {% for blog in page_obj %}
-      <div class="col-4 my-3">
-        <div class="card mx-5" style="width: 18rem; height:22rem; margin-right:20px ">
-          <img src="{{ blog.img.url}}" style="max-height:225px; alt="...">
-          <div class="card-body" style="position:absolute; top:214px ">
-            <h5 class="card-title">{{ blog.name }}</h5>
-            <p class="card-text">{{ blog.tag_line}}</p>
-            <a href="readblog/{{blog.id}}" class="btn btn-primary" id="qv{{blog.id}}">Read full Blog</a>
+    <div class="row mx-2">
+        {% for blog in page_obj %}
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                <div class="card">
+                    <img src="{{ blog.img.url }}" class="card-img-top" alt="..." style="height: 150px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ blog.name }}</h5>
+                        <p class="card-text" style="flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ blog.tag_line }}</p>
+                        <a href="readblog/{{ blog.id }}" class="btn btn-primary mt-auto">Read full Blog</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 
-          </div>
-        </div> 
-        </div>
-    {% endfor %}
+    <div class="pagination-container mt-4">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+            {% endif %}
 
-    <div class="pagination">
-      <span class="step-links">
-          {% if page_obj.has_previous %}
-              <a href="?page=1">&laquo; first</a>
-              <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-          {% endif %}
-  
-          <span class="current">
-              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-          </span>
-  
-          {% if page_obj.has_next %}
-              <a href="?page={{ page_obj.next_page_number }}">next</a>
-              <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-          {% endif %}
-      </span>
-  </div>
+            <li class="page-item disabled">
+                <span class="page-link">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+            </li>
 
-
-{% else %}
-
-  <div class="alert alert-info" role="alert">
-    Hey User Welcome to our website. Please sign up to Continue :D
-  </div> 
-
-{% endif %}
-
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+            {% endif %}
+        </ul>
+    </div>
 
 {% endblock %}
-
-
-
-

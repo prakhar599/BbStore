@@ -1,16 +1,35 @@
 {% extends 'blog/base.html' %}
 {% load static %}
-{%block title %}  BlogContent {% endblock %}
-{% block heading %} <strong class="my-5"> BlogContent </strong> {% endblock %}
+{% block title %}BlogContent{% endblock %}
+{% block heading %}
+  <div class="my-5 text-center">
+    <h1 class="display-4">{{ blog.name }}</h1>
+    <p class="lead">Author: {{ blog.entry }}</p>
+    <p class="lead">"{{ blog.tag_line }}"</p>
+  </div>
+{% endblock %}
 
-{% block body %} 
-<div class = "container">
-    <h1> {{ blog.name }} </h1> Author:- {{blog.entry}}
-    <p>"{{ blog.tag_line}}"</p>
-    <img src="{{ blog.img.url}}" style="max-height:225px; alt="...">
-    <p>{{blog.content}}</p>
-    
+{% block body %}
+<div class="container mt-4">
+    <div class="blog-content">
+        <img src="{{ blog.img.url }}" class="img-fluid mb-4 mx-auto d-block rounded" alt="{{ blog.name }}">
+        <p class="lead">{{ blog.content|safe }}</p>
+    </div>
 </div>
+{% endblock %}
 
+{% block css %}
+  <style>
+    .blog-content {
+      background-color: #f8f9fa; /* Light background color */
+      border: 2px solid #007bff; /* Border color */
+      border-radius: 10px; /* Rounded corners */
+      padding: 20px; /* Padding inside the container */
+      color: #343a40; /* Text color */
+    }
 
+    .blog-content img {
+      max-width: 100%;
+    }
+  </style>
 {% endblock %}

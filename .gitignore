@@ -7,3 +7,4 @@
 .profile
 .vimrc
 bbStore/.vscode
+*.pyc

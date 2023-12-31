@@ -1,0 +1,9 @@
+.bashrc
+.git/
+.gitconfig
+.ipython/
+.my.cnf
+.pythonstartup.py
+.profile
+.vimrc
+bbStore/.vscode

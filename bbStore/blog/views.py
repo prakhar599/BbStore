@@ -9,6 +9,19 @@ from django.core.paginator import Paginator
 
 
 
+def search_blogs(request):
+    query = request.GET.get('q', '')
+
+    # Use __icontains to perform a case-insensitive partial match on the title
+    matched_blogs = Blog.objects.filter(name__icontains=query)
+
+    context = {
+        'query': query,
+        'matched_blogs': matched_blogs,
+    }
+
+    return render(request, 'blog/search_results.html', context)
+
 def index(request):
      blogs = Blog.objects.all().order_by('name')
      paginator = Paginator(blogs,6,orphans=3) # Show 25 contacts per page.

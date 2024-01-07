@@ -1,28 +1,50 @@
+<!-- In your blog/blog.html -->
 {% extends 'blog/base.html' %}
 {% load static %}
+
 {% block title %} Blogs {% endblock %}
 
-{% block heading %}   {% endblock %}
 {% block body %}
 
-    <div class="alert alert-info" role="alert">
-        Hey User, welcome to our website. Please sign up for more features :D
+    {% if not user.is_authenticated %}
+        <div class="alert alert-info" role="alert">
+            Hey User, welcome to our website. Please sign up for more features :D
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2 class="mb-4" id="discoverBlogs">Discover Amazing Blogs</h2>
+        </div>
     </div>
 
-    <strong class="mx-5 my-3"> All Blogs</strong>
-    <div class="row mx-2">
-        {% for blog in page_obj %}
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
-                <div class="card">
-                    <img src="{{ blog.img.url }}" class="card-img-top" alt="..." style="height: 150px; object-fit: cover;">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ blog.name }}</h5>
-                        <p class="card-text" style="flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ blog.tag_line }}</p>
-                        <a href="readblog/{{ blog.id }}" class="btn btn-primary mt-auto">Read full Blog</a>
-                    </div>
+    <!-- Search bar added to the landing page below the greeting -->
+    <div class="container mt-3">
+        <div class="row justify-content-end">
+            <div class="col-md-4">
+                <div class="input-group" style="margin-right: 50px;">
+                    <input type="text" class="form-control" placeholder="Search" id="searchInput">
+                    <button class="btn btn-primary" onclick="searchBlog()">Search</button>
                 </div>
             </div>
-        {% endfor %}
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row mx-2">
+            {% for blog in page_obj %}
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <div class="card">
+                        <img src="{{ blog.img.url }}" class="card-img-top" alt="..." style="height: 150px; object-fit: cover;">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ blog.name }}</h5>
+                            <p class="card-text" style="flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ blog.tag_line }}</p>
+                            <a href="{% url 'readblog' blog.id %}" class="btn btn-primary mt-auto">Read full Blog</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
     <div class="pagination-container mt-4">
@@ -44,5 +66,26 @@
             {% endif %}
         </ul>
     </div>
+
+    <script>
+        // JavaScript function for searching blogs
+        function searchBlog() {
+            var searchInput = document.getElementById("searchInput").value;
+            // Redirect to the search results page with the search query
+            window.location.href = "/blog/search/?q=" + searchInput;
+        }
+    </script>
+
+    <!-- Link to Animate.css library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" integrity="sha512-GnWA97L6O/wywq9FcpaDNU3R/8jN1tBhlT9jpOeyUM1N6c8gMqSw/4p+64h3Kt+G5GG5Jo/Ei5p4ePx7FlBiCg==" crossorigin="anonymous" />
+
+    <!-- Custom CSS for additional styling -->
+    <style>
+        /* Add your custom styles here */
+        /* For example: */
+        .mb-4 {
+            color: #007bff; /* Change the color as needed */
+        }
+    </style>
 
 {% endblock %}

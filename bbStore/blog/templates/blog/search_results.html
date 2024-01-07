@@ -1,0 +1,32 @@
+<!-- In blog/search_results.html -->
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %} Search Results {% endblock %}
+
+{% block heading %}
+    <h2>Search Results for '{{ query }}'</h2>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row mx-2">
+        {% if matched_blogs %}
+            {% for blog in matched_blogs %}
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <div class="card">
+                        <img src="{{ blog.img.url }}" class="card-img-top" alt="..." style="height: 150px; object-fit: cover;">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ blog.name }}</h5>
+                            <p class="card-text" style="flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ blog.tag_line }}</p>
+                            <a href="{% url 'readblog' blog.id %}" class="btn btn-primary mt-auto">Read full Blog</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No matching blogs found.</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

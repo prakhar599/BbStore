@@ -17,6 +17,8 @@ urlpatterns = [
     path('signup/',views.signUp,name="signUp"),
     path('books',views.books,name='books'),
     path('contact/', views.contact, name='contact'),
+    path('search/', views.search_blogs, name='search_blogs'),
+
 
 
 ]

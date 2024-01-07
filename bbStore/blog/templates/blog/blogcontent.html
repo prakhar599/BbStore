@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 {% load static %}
-{% block title %}BlogContent{% endblock %}
+{% block title %}{{ blog.name }}{% endblock %}
 {% block heading %}
   <div class="my-5 text-center">
     <h1 class="display-4">{{ blog.name }}</h1>
@@ -12,6 +12,22 @@
 {% block body %}
 <div class="container mt-4">
     <div class="blog-content">
+        <!-- Add Open Graph Protocol (OGP) meta tags for social media sharing -->
+        <meta property="og:title" content="{{ blog.name }}">
+        <meta property="og:description" content="{{ blog.tag_line }}">
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ blog.img.url }}">
+        <meta property="og:url" content="{{ request.build_absolute_uri }}">
+        <meta property="og:type" content="article">
+
+        <!-- Add Twitter Card meta tags for Twitter sharing -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ blog.name }}">
+        <meta name="twitter:description" content="{{ blog.tag_line }}">
+        <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{ blog.img.url }}">
+        <meta name="twitter:url" content="{{ request.build_absolute_uri }}">
+        <meta name="twitter:image:width" content="144">  <!-- Set a default width for the Twitter card image -->
+        <meta name="twitter:image:height" content="144"> <!-- Set a default height for the Twitter card image -->
+
         <img src="{{ blog.img.url }}" class="img-fluid mb-4 mx-auto d-block rounded" alt="{{ blog.name }}">
         <p class="lead">{{ blog.content|safe }}</p>
     </div>

@@ -13,6 +13,16 @@ class ContactMessage(models.Model):
     def __str__(self):
         return self.subject
 
+class UserFollowing(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="following")
+    following_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="followers")
+
+    class Meta:
+        # Add a unique constraint to ensure each user can follow another user only once
+        unique_together = ['user', 'following_user']
+        
+    def __str__(self):
+        return f"{self.user.username} follows {self.following_user.username}"
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -25,6 +35,7 @@ class Author(models.Model):
     stackoverflow = models.URLField(max_length=255, blank=True)
     personal_website = models.URLField(max_length=255, blank=True)
     linkedin_channel = models.URLField(max_length=255, blank=True)
+
 
     def __str__(self):
         return self.user.username

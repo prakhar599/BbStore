@@ -1,11 +1,32 @@
-from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render , redirect
-from .models import Author , Blog, ContactMessage
+from .models import Blog, ContactMessage, UserFollowing
 from .forms import signUpForm, logInForm
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout as auth_logout
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+from .forms import UserProfileForm 
+
+
+@login_required
+def user_profile(request):
+    user = request.user
+
+    # Retrieve the counts
+    followers_count = UserFollowing.objects.filter(following_user=user).count()
+    following_count = UserFollowing.objects.filter(user=user).count()
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=user.author)
+        if form.is_valid():
+            form.save()
+
+            # Redirect to the same page after successful submission
+            return redirect('user_profile')
+    else:
+        form = UserProfileForm(instance=user.author)
+
+    return render(request, 'blog/user_profile.html', {'form': form, 'followers_count': followers_count, 'following_count': following_count})
 
 
 
@@ -81,8 +102,6 @@ def contact(request):
 
         return render(request, 'blog/thank_you.html')
     return render(request, 'blog/contact.html')
-
-
 
 def logout(request):
     auth_logout(request)

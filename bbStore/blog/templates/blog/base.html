@@ -1,3 +1,4 @@
+<!-- In your blog/base.html -->
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -9,9 +10,8 @@
     <link rel="icon" href="{% static 'blog/Screenshot from 2023-12-24 17-47-05.png' %}" type="image/png">
 
     <style>
-        /* Custom styles for the navbar */
         body {
-            padding-top: 56px; /* Adjusted for fixed navbar height */
+            padding-top: 56px;
         }
 
         .navbar {
@@ -37,7 +37,16 @@
             background-color: #007bff;
         }
 
-        /* Custom styles for the footer */
+        /* New style for the profile picture */
+        .navbar-profile-pic {
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-left: 10px;
+            margin-top: -5px; /* Adjust the margin to align with other navbar elements */
+        }
+
         footer {
             background-color: #f8f9fa;
             padding: 20px 0;
@@ -72,7 +81,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ms-auto"> <!-- Use ms-auto to move items to the right -->
+            <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="/blog/aboutus">About Us</a>
                 </li>
@@ -89,8 +98,14 @@
                 </li>
 
                 {% if user.is_authenticated %}
-                    <li class="nav-item ml-3">
-                        <a class="nav-link active" aria-current="page" href="/blog/logout">LogOut</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{% if user.author.profile_pic %}{{ user.author.profile_pic.url }}{% else %}{% static 'blog/avatar-3814049_1280.png' %}{% endif %}" alt="Profile" class="navbar-profile-pic">
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/blog/user-profile">My Profile</a></li>
+                            <li><a class="dropdown-item" href="/blog/logout">LogOut</a></li>
+                        </ul>
                     </li>
                 {% else %}
                     <li class="nav-item">

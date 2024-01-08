@@ -1,0 +1,113 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block body %}
+
+<style>
+    /* Add custom styles for profile section */
+    .container {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        color: #007bff;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+    }
+
+    .row {
+        margin-top: 20px;
+    }
+
+    .col-md-3 {
+        text-align: center;
+    }
+
+    .img-fluid {
+        border: 3px solid #007bff;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+
+    .img-fluid:hover {
+        transform: scale(1.1);
+    }
+
+    .col-md-9 {
+        padding-left: 20px;
+    }
+
+    /* Additional styles for the form */
+    .form-label {
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+</style>
+
+<div class="container mt-5">
+    <h2>Your Profile</h2>
+
+    <div class="row mt-3">
+        <div class="col-md-3">
+            <img src="{% if user.author.profile_pic %}{{ user.author.profile_pic.url }}{% else %}{% static 'path/to/default/profile_pic.jpg' %}{% endif %}" alt="Profile" class="img-fluid rounded-circle" id="profile-picture">
+        </div>
+        <div class="col-md-9">
+            <p><strong>Name:</strong> {{ user.get_full_name }}</p>
+            <p><strong>Tagline:</strong> {{ user.author.tagline }}</p>
+            <p><strong>Bio:</strong> {{ user.author.bio }}</p>
+            <p><strong>Followers:</strong> {{ followers_count }}</p>
+            <p><strong>Following:</strong> {{ following_count }}</p>            
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Twitter Profile:</strong> <a href="{{ user.author.twitter_profile }}" target="_blank">{{ user.author.twitter_profile }}</a></p>
+            <p><strong>Instagram Profile:</strong> <a href="{{ user.author.instagram_profile }}" target="_blank">{{ user.author.instagram_profile }}</a></p>
+            <p><strong>Github:</strong> <a href="{{ user.author.github }}" target="_blank">{{ user.author.github }}</a></p>
+            <p><strong>Stack Overflow:</strong> <a href="{{ user.author.stackoverflow }}" target="_blank">{{ user.author.stackoverflow }}</a></p>
+            <p><strong>Personal Website:</strong> <a href="{{ user.author.personal_website }}" target="_blank">{{ user.author.personal_website }}</a></p>
+            <p><strong>LinkedIn:</strong> <a href="{{ user.author.linkedin_channel }}" target="_blank">{{ user.author.linkedin_channel }}</a></p>            
+        </div>
+    </div>
+
+    <!-- Form for editing profile details -->
+    <form method="post" action="{% url 'user_profile' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="profile_pic" class="form-label">Profile Picture</label>
+            <input type="file" class="form-control" id="profile_pic" name="profile_pic">
+        </div>
+        <div class="mb-3">
+            <label for="bio" class="form-label">Bio</label>
+            <textarea class="form-control" id="bio" name="bio">{{ user.author.bio }}</textarea>
+        </div>
+        <!-- Add other form fields for editing profile details here -->
+
+        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+    </form>
+</div>
+
+<!-- Include jQuery library (optional) -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $("#profile-picture").click(function() {
+            $(".profile-info").toggle();
+        });
+    });
+</script>
+
+{% endblock %}

@@ -18,9 +18,7 @@ urlpatterns = [
     path('books',views.books,name='books'),
     path('contact/', views.contact, name='contact'),
     path('search/', views.search_blogs, name='search_blogs'),
-
-
-
+    path('user-profile/', views.user_profile, name='user_profile'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

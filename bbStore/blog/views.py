@@ -28,7 +28,7 @@ def user_profile(request):
 
     return render(request, 'blog/user_profile.html', {'form': form, 'followers_count': followers_count, 'following_count': following_count})
 
-
+print('here')
 
 def search_blogs(request):
     query = request.GET.get('q', '')

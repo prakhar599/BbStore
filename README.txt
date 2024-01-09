@@ -1,2 +1,7 @@
 Up
-dating this Readme File
+d ating this Readme File
+
+BbStore
+
+- An Online Coffee spot for developers
+

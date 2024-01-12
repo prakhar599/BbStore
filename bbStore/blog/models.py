@@ -51,4 +51,33 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.name
+    
+class EBook(models.Model):
+    title = models.CharField(max_length=255)
+    author = models.CharField(max_length=255)
+    publication_date = models.DateField()
+    isbn = models.CharField(max_length=13, unique=True)
+    genre = models.CharField(max_length=100)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    cover_image = models.ImageField(upload_to='ebook_covers/', null=True, blank=True)
+    language = models.CharField(max_length=50)
+    pages = models.PositiveIntegerField()
+    publisher = models.CharField(max_length=255)
+    availability = models.BooleanField(default=True)
+    average_rating = models.FloatField(default=0.0)
+    total_ratings = models.PositiveIntegerField(default=0)
+    file = models.FileField(upload_to='ebooks/')
+    file_format = models.CharField(max_length=10, choices=[('PDF', 'PDF'), ('EPUB', 'EPUB'), ('MOBI', 'MOBI')])
+    category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+    
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
 

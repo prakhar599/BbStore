@@ -140,3 +140,6 @@ REST_FRAMEWORK = {
 }
 
 CKEDITOR_UPLOAD_PATH = '/media/'
+
+PAYPAL_CLIENT_ID = 'ATwFdKf9EdYIEavSFvN7lx0qy3j4XgcWwozVZovLhrjrcvWovCefR5xr3tnhhvQKIlDeqdoKTpc-t6oG'
+PAYPAL_SECRET = 'ECZe1ALQwuRRemYgPhFlwnu_I97K3bGZsr1IiElusXIltq9f3gn5GnUIev88L0fEzCSji4jzqNMZqLyl'

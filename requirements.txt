@@ -389,6 +389,7 @@ python-poppler==0.3.0
 python-pptx==0.6.21
 python-slugify==6.1.2
 pytz==2021.3
+python-decouple==3.8
 pytz-deprecation-shim==0.1.0.post0
 PyVirtualDisplay==3.0
 PyWavelets==1.2.0

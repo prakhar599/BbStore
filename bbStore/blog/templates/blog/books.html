@@ -1,1 +1,12 @@
 {% extends 'blog/base.html' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block body %}
+    <h1>Checkout Page</h1>
+    
+    <form action="{% url 'create_payment' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Pay with PayPal</button>
+    </form>
+{% endblock %}

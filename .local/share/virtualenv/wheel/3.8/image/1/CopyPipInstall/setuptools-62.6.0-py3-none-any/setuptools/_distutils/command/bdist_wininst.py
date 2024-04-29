@@ -12,6 +12,7 @@ from distutils.dir_util import remove_tree
 from distutils.errors import *
 from distutils.sysconfig import get_python_version
 from distutils import log
+import tempfile
 
 
 class bdist_wininst(Command):
@@ -208,11 +209,7 @@ class bdist_wininst(Command):
 
         del sys.path[0]
 
-        # And make an archive relative to the root of the
-        # pseudo-installation tree.
-        from tempfile import mktemp
-
-        archive_basename = mktemp()
+        archive_basename = tempfile.mkstemp()
         fullname = self.distribution.get_fullname()
         arcname = self.make_archive(archive_basename, "zip", root_dir=self.bdist_dir)
         # create an exe containing the zip-file

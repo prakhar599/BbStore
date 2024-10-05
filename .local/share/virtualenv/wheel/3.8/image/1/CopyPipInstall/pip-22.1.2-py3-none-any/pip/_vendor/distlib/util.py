@@ -14,6 +14,8 @@ import os
 import py_compile
 import re
 import socket
+from security import safe_command
+
 try:
     import ssl
 except ImportError:  # pragma: no cover
@@ -1746,7 +1748,7 @@ class SubprocessMixin(object):
         stream.close()
 
     def run_command(self, cmd, **kwargs):
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+        p = safe_command.run(subprocess.Popen, cmd, stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE, **kwargs)
         t1 = threading.Thread(target=self.reader, args=(p.stdout, 'stdout'))
         t1.start()

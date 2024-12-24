@@ -15,10 +15,10 @@
 # limitations under the License.
 
 import abc
-import random
 import typing
 
 from pip._vendor.tenacity import _utils
+import secrets
 
 if typing.TYPE_CHECKING:
     from pip._vendor.tenacity import RetryCallState
@@ -66,7 +66,7 @@ class wait_random(wait_base):
         self.wait_random_max = max
 
     def __call__(self, retry_state: "RetryCallState") -> float:
-        return self.wait_random_min + (random.random() * (self.wait_random_max - self.wait_random_min))
+        return self.wait_random_min + (secrets.SystemRandom().random() * (self.wait_random_max - self.wait_random_min))
 
 
 class wait_combine(wait_base):
@@ -188,4 +188,4 @@ class wait_random_exponential(wait_exponential):
 
     def __call__(self, retry_state: "RetryCallState") -> float:
         high = super().__call__(retry_state=retry_state)
-        return random.uniform(0, high)
+        return secrets.SystemRandom().uniform(0, high)

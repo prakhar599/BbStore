@@ -1,13 +1,13 @@
 import sys
 from functools import lru_cache
 from marshal import loads, dumps
-from random import randint
 from typing import Any, cast, Dict, Iterable, List, Optional, Type, Union
 
 from . import errors
 from .color import Color, ColorParseError, ColorSystem, blend_rgb
 from .repr import rich_repr, Result
 from .terminal_theme import DEFAULT_TERMINAL_THEME, TerminalTheme
+import secrets
 
 
 # Style instances and style definitions are often interchangeable
@@ -189,7 +189,7 @@ class Style:
         )
 
         self._link = link
-        self._link_id = f"{randint(0, 999999)}" if link else ""
+        self._link_id = f"{secrets.SystemRandom().randint(0, 999999)}" if link else ""
         self._meta = None if meta is None else dumps(meta)
         self._hash = hash(
             (
@@ -502,7 +502,7 @@ class Style:
         style._attributes = self._attributes
         style._set_attributes = self._set_attributes
         style._link = self._link
-        style._link_id = f"{randint(0, 999999)}" if self._link else ""
+        style._link_id = f"{secrets.SystemRandom().randint(0, 999999)}" if self._link else ""
         style._hash = self._hash
         style._null = False
         style._meta = None
@@ -654,7 +654,7 @@ class Style:
         style._attributes = self._attributes
         style._set_attributes = self._set_attributes
         style._link = self._link
-        style._link_id = f"{randint(0, 999999)}" if self._link else ""
+        style._link_id = f"{secrets.SystemRandom().randint(0, 999999)}" if self._link else ""
         style._hash = self._hash
         style._null = False
         style._meta = self._meta
@@ -677,7 +677,7 @@ class Style:
         style._attributes = self._attributes
         style._set_attributes = self._set_attributes
         style._link = link
-        style._link_id = f"{randint(0, 999999)}" if link else ""
+        style._link_id = f"{secrets.SystemRandom().randint(0, 999999)}" if link else ""
         style._hash = self._hash
         style._null = False
         style._meta = self._meta

@@ -99,3 +99,4 @@ CKEDITOR_UPLOAD_PATH = config('CKEDITOR_UPLOAD_PATH', default='/media/')
 # PayPal Settings
 PAYPAL_CLIENT_ID = config('PAYPAL_CLIENT_ID', default='')
 PAYPAL_SECRET = config('PAYPAL_SECRET', default='')
+SESSION_COOKIE_SECURE = True

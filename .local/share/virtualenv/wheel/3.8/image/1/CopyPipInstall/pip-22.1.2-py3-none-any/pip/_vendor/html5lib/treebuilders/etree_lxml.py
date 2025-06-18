@@ -15,6 +15,7 @@ from __future__ import absolute_import, division, unicode_literals
 import warnings
 import re
 import sys
+import lxml.etree
 
 try:
     from collections.abc import MutableMapping
@@ -362,7 +363,7 @@ class TreeBuilder(base.TreeBuilder):
             if self.doctype.name != token["name"]:
                 warnings.warn("lxml cannot represent doctype with a different name to the root element", DataLossWarning)
         docStr += "<THIS_SHOULD_NEVER_APPEAR_PUBLICLY/>"
-        root = etree.fromstring(docStr)
+        root = etree.fromstring(docStr, parser=lxml.etree.XMLParser(resolve_entities=False))
 
         # Append the initial comments:
         for comment_token in self.initial_comments:

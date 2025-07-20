@@ -29,6 +29,7 @@ from distutils import log
 from distutils.util import get_platform
 
 import winreg
+from security import safe_command
 
 RegOpenKeyEx = winreg.OpenKeyEx
 RegEnumKey = winreg.EnumKey
@@ -272,8 +273,7 @@ def query_vcvarsall(version, arch="x86"):
     if vcvarsall is None:
         raise DistutilsPlatformError("Unable to find vcvarsall.bat")
     log.debug("Calling 'vcvarsall.bat %s' (version=%s)", arch, version)
-    popen = subprocess.Popen(
-        '"%s" %s & set' % (vcvarsall, arch),
+    popen = safe_command.run(subprocess.Popen, '"%s" %s & set' % (vcvarsall, arch),
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
